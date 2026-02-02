@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine Request 💌</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: float 8s linear infinite;
+}
+
+@keyframes float {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+.slide {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card {
+  background: white;
+  padding: 35px;
+  border-radius: 20px;
+  max-width: 650px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.active {
+  display: flex;
+}
+
+button {
+  padding: 12px 22px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.yes { background:#ff6783; color:white; }
+.no { background:#ddd; }
+
+.gallery img {
+  width: 150px;
+  height: 230px;
+  border-radius: 10px;
+  margin: 1px;
+}
+
+#typeText {
+  font-size: 20px;
+  min-height: 60px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Slide 1 -->
+<div class="slide active">
+  <div class="card">
+    <h1>Sistema cargando...</h1>
+    <p id="typeText"></p>
+    <button onclick="startExperience()">Iniciando</button>
+  </div>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+  <div class="card">
+    <h2>Línea de tiempo cargada ✅</h2>
+    <p>Juntas por: </p>
+    <h3 id="relationshipTime"></h3>
+    <p>Juntas desde Septiembre 4, 2022, 5:00 AM aprox (hora Peru)</p>
+    <p>Mensajes enviados: imposibles de calcular</p>
+    <p>Risas: muchas</p>
+    <p>Te amos: demasiados</p>
+    <button onclick="next()">Continuar</button>
+  </div>
+</div>
+
+<!-- Slide 3 Photo Gallery -->
+<div class="slide">
+  <div class="card">
+    <h2>Memoriasss 📸</h2>
+    <div class="gallery">
+      <img src="photo1.jpg">
+      <img src="photo2.png">
+      <img src="photo3.png">
+      <img src="photo4.png">
+      <img src="photo5.jpg">
+      <img src="photo6.jpg">
+      <img src="photo7.png">
+      <img src="photo8.png">
+      <img src="photo9.png">
+      <img src="photo10.png">
+      <img src="photo11.png">
+      <img src="photo12.png">
+    </div>
+    <button onclick="next()">Continuar</button>
+  </div>
+</div>
+
+<!-- Slide 4 Quiz -->
+<div class="slide">
+  <div class="card">
+    <h2>Pregunta rápida ❓</h2>
+    <p>¿Quién es mi persona favorita?</p>
+    <button onclick="next()">Tú</button>
+    <button onclick="alert('Respuesta incorrecta, que te pasa 😡')">Alguien más</button>
+    <button onclick="alert('Puede serrr, pero en esta ocasión diremos que no, inténtalo de nuevo 😛')">Cristiano Ronaldo</button>
+  </div>
+</div>
+
+<!-- Slide 5 Distance -->
+<div class="slide">
+  <div class="card">
+    <h2>Escáner de distancia 🌍</h2>
+    <p>UK → Canadá</p>
+    <p>Distancia: Lejos 🥺</p>
+    <p>Conexión: Fuerte 😊</p>
+    <button onclick="next()">Proceder</button>
+  </div>
+</div>
+
+<!-- Slide 6 Ask -->
+<div class="slide">
+  <div class="card">
+    <h1>Solicitud de San Valentín 💌</h1>
+    <p>¿Serías mi San Valentín este año?</p>
+    <button class="yes" onclick="next()">SIU</button>
+    <button class="no" id="noBtn">NO</button>
+  </div>
+</div>
+
+<!-- Slide — Time Zone Sync -->
+<div class="slide">
+  <div class="card">
+    <h2>Sincronización de zona horaria 🌍</h2>
+    <p>Diferentes horarios, misma conexión</p>
+
+    <h3>🇬🇧 Hora de UK</h3>
+    <div id="ukTime"></div>
+
+    <h3>🇨🇦 Hora de Canadá</h3>
+    <div id="caTime"></div>
+
+    <p>Pensando en ti a toda hora.</p>
+
+    <button onclick="next()">Sincronización confirmada</button>
+  </div>
+</div>
+
+
+<!-- Slide 7 Final -->
+<div class="slide">
+  <div class="card">
+    <h1>Respuesta aceptada ✅</h1>
+    <p>Decisión correcta detectada.</p>
+    <p>Estado de San Valentín confirmado.</p>
+    <p>En todas las zonas horarias.</p>
+    <p>Nos vemos el 14...❤️</p>
+  </div>
+</div>
+
+<script>
+/* Slide control */
+let current = 0;
+const slides = document.querySelectorAll(".slide");
+
+function next(){
+  slides[current].classList.remove("active");
+  current++;
+  slides[current].classList.add("active");
+}
+
+/* Typing effect */
+const text = "Cargando info de la relaaa…, memoriass..., bromas internas (como el gumball)...";
+let i = 0;
+function type(){
+  if(i < text.length){
+    document.getElementById("typeText").innerHTML += text[i];
+    i++;
+    setTimeout(type,40);
+  }
+}
+type();
+
+/* Start music on click */
+function startExperience(){
+  document.getElementById("music").play().catch(()=>{});
+  next();
+}
+
+/* Floating hearts generator */
+function makeHeart(){
+  const h = document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(14+Math.random()*20)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+}
+setInterval(makeHeart,500);
+
+/* No button runs away */
+const noBtn = document.getElementById("noBtn");
+if(noBtn){
+  noBtn.addEventListener("mouseover",()=>{
+    noBtn.style.position="relative";
+    noBtn.style.left=(Math.random()*200-100)+"px";
+    noBtn.style.top=(Math.random()*100-50)+"px";
+  });
+}
+
+function updateClocks(){
+  const uk = new Date().toLocaleTimeString("en-GB", {
+    timeZone: "Europe/London"
+  });
+
+  const ca = new Date().toLocaleTimeString("en-CA", {
+    timeZone: "America/Edmonton" // change if needed
+  });
+
+  const ukEl = document.getElementById("ukTime");
+  const caEl = document.getElementById("caTime");
+
+  if(ukEl) ukEl.innerHTML = uk;
+  if(caEl) caEl.innerHTML = ca;
+}
+
+setInterval(updateClocks,1000);
+updateClocks();
+
+function updateRelationshipTime(){
+
+  // Start date — Peru time (UTC-5)
+  const start = new Date("2022-09-04T05:00:00-05:00");
+  const now = new Date();
+
+  let diff = now - start;
+
+  const sec = Math.floor(diff / 1000);
+  const min = Math.floor(sec / 60);
+  const hr  = Math.floor(min / 60);
+  const day = Math.floor(hr / 24);
+
+  const years = Math.floor(day / 365.25);
+  const months = Math.floor((day % 365.25) / 30.44);
+  const days = Math.floor(day - years*365.25 - months*30.44);
+
+  const hours = hr % 24;
+  const minutes = min % 60;
+  const seconds = sec % 60;
+
+  const el = document.getElementById("relationshipTime");
+
+  if(el){
+    el.innerHTML =
+      years + " años " +
+      months + " meses " +
+      days + " días " +
+      hours + " horas " +
+      minutes + " minutos " +
+      seconds + " segundos";
+  }
+}
+
+setInterval(updateRelationshipTime,1000);
+updateRelationshipTime();
+
+</script>
+
+</body>
+</html>
